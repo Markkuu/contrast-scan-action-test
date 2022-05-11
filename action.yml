@@ -1,0 +1,38 @@
+name: 'Contrast Scan Analyze'
+description: 'Perform SAST analysis of a project'
+inputs:
+  apiKey:
+    description: 'An agent API key provided by Contrast (required).'
+    required: true
+  orgId:
+    description: 'The ID of your organization in Contrast (required).'
+    required: true
+  projectName:
+    description: 'The name of the project you want to scan in Contrast (required).'
+    required: true
+  apiUrl:
+    description: 'The name of the host and, optionally, the port expressed as <host>:<port>. Does not include the protocol section of the URL (https://). Defaults to app.contrastsecurity.com. (optional)'
+    required: false
+  authHeader:
+    description: 'User authorization credentials provided by Contrast (required).'
+    required: true
+  userName:
+    description: 'Your User Name for the Contrast Platform.'
+    required: true
+  artifact:
+    description: 'The Artifact to Scan on the Contrast Platform.'
+    required: true
+  language:
+    description: 'The language of the project you want to scan (required).'
+    required: true
+  timeout:
+    description: 'Set a specific time span (in seconds) before the function times out. The default timeout is 5 minutes if timeout is not set.'
+    required: false
+  sarif:
+    description: 'The path in which to save the SARIF results.'
+    required: false
+    default: "contrastscan.results.sarif"
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
