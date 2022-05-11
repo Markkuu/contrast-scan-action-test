@@ -31,7 +31,7 @@ inputs:
   sarif:
     description: 'The path in which to save the SARIF results.'
     required: false
-    default: "contrastscan.results.sarif"
+    default: "results.sarif"
 
 runs:
   using: 'docker'
