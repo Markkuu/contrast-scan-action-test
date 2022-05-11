@@ -1,5 +1,5 @@
 #!/bin/sh -l
-echo "API Key: $INPUT_APIKEY"
+echo "API Key: $INPUT_apiKey"
 echo "Org ID: $INPUT_ORGID"
 echo "Project Name: $INPUT_PROJECTNAME"
 echo "API URL $INPUT_APIURL"
