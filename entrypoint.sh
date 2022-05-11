@@ -1,4 +1,6 @@
 #!/bin/sh -l
+echo "$@"
+
 echo "API Key: $INPUT_apiKey"
 echo "Org ID: $INPUT_ORGID"
 echo "Project Name: $INPUT_PROJECTNAME"
