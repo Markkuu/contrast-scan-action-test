@@ -24,14 +24,14 @@ file_size() {
 		fi
 }
 
-args=( )
+declare -a ARGS
 
 if [[ $INPUT_WAITFORSCAN ]]; then
-  args+=( --wait_for_scan )
+  ARGS+=( --wait_for_scan )
 fi
 
 if [[ $INPUT_SAVESCANRESULTS ]]; then
-  args+=( --save_scan_results )
+  ARGS+=( --save_scan_results )
 fi
 
 timeout "${INPUT_TIMEOUT+60:-360}s" contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY" \
