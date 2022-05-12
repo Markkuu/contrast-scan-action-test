@@ -10,6 +10,4 @@ echo "SARIF Output: $INPUT_SARIF"
 echo "Languages: $INPUT_LANGUAGE"
 echo "Timeout: $INPUT_TIMEOUT"
 
-echo "contrast-cli --api_key $INPUT_APIKEY --authorization $INPUT_AUTHHEADER --host $INPUT_APIURL --application_id "none" --organization_id $INPUT_ORGID --project_id $INPUT_PROJECTID --scan $INPUT_ARTIFACT --scan_timeout ${INPUT_TIMEOUT:-300} --language $INPUT_LANGUAGE --wait_for_scan --save_scan_results"
-
-contrast-cli --api_key "$INPUT_APIKEY" --authorization "$INPUT_AUTHHEADER" --host "$INPUT_APIURL" --application_id "none" --organization_id "$INPUT_ORGID" --project_id "$INPUT_PROJECTID" --scan "$INPUT_ARTIFACT" --scan_timeout "${INPUT_TIMEOUT:-300}" --language "$INPUT_LANGUAGE" --wait_for_scan --save_scan_results
+contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY"  --authorization "$INPUT_AUTHHEADER" --organization_id "$INPUT_INPUT_ORGID" --host "$INPUT_HOST" --project_name "$INPUT_PROJECTNAME" --language "$INPUT_LANGUAGE" --scan_timeout "${INPUT_TIMEOUT:-300}" --wait_for_scan --save_scan_results
