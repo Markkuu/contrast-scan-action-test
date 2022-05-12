@@ -1,7 +1,7 @@
 # Container image that runs your code
 FROM node:alpine
 
-RUN npm install -g @contrast/contrast-cli && npm install -g node-jq
+RUN npm install -g @contrast/contrast-cli && apt-get install jq
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
