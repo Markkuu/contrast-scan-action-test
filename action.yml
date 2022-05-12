@@ -32,7 +32,14 @@ inputs:
     description: 'The path in which to save the SARIF results.'
     required: false
     default: "results.sarif"
-
+  waitForScan:
+    description: 'Wait for the scan to complete before continuing'
+    required: false
+    default: 'true'
+  saveScanResults:
+    description: 'After the scan has completed successfully, store the scan results in SARIF format to disk.'
+    required: false
+    default: 'true'
 runs:
   using: 'docker'
   image: 'Dockerfile'

@@ -8,22 +8,40 @@ echo "Artifact: $INPUT_ARTIFACT"
 echo "SARIF Output: $INPUT_SARIF"
 echo "Languages: $INPUT_LANGUAGE"
 echo "Timeout: $INPUT_TIMEOUT"
+echo "WaitForScan: $INPUT_WAITFORSCAN"
+echo "SaveScanResults $INPUT_SAVESCANRESULTS"
 
-contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY"  --authorization "$INPUT_AUTHHEADER" --organization_id "$INPUT_ORGID" --host "$INPUT_APIURL" --project_name "$INPUT_PROJECTNAME" --language "$INPUT_LANGUAGE" --scan_timeout "${INPUT_TIMEOUT:-300}" --wait_for_scan --save_scan_results
-
-npm root -g
-
-/usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' results.json
+set -x #echo on
 
 file_size() {
 	file=$1
-	minimumsize=10485760
-	actualsize=$(wc -c <"$file")
-		if [ $actualsize -ge $minimumsize ]; then
-	    echo size is over $minimumsize bytes
+	maximum_size=10485760
+	actual_size=$(wc -c <"$file")
+		if [ "$actual_size" -ge $maximum_size ]; then
+	    echo Results file size is over $maximum_size bytes
 		else
-	    echo size is under $minimumsize bytes
+	    echo Results file size is under $maximum_size bytes
 		fi
 }
 
-file_size results.json
+args=( )
+
+if [[ $INPUT_WAITFORSCAN ]]; then
+  args+=( --wait_for_scan )
+fi
+
+if [[ $INPUT_SAVESCANRESULTS ]]; then
+  args+=( --save_scan_results )
+fi
+
+timeout "${INPUT_TIMEOUT+60:-360}s" contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY" \
+ --authorization "$INPUT_AUTHHEADER" --organization_id "$INPUT_ORGID" --host "$INPUT_APIURL" \
+ --project_name "$INPUT_PROJECTNAME" --language "$INPUT_LANGUAGE" --scan_timeout "${INPUT_TIMEOUT:-300}" \
+ "${args[@]}"
+
+if [[ $INPUT_SAVESCANRESULTS ]]; then
+  /usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' results.json
+  file_size results.json
+fi
+
+
