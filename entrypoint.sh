@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -l
 
 echo "API Key: $INPUT_APIKEY"
 echo "Org ID: $INPUT_ORGID"
@@ -25,7 +25,7 @@ file_size() {
 		fi
 }
 
-ARGS=()
+ARGS=""
 
 if [[ $INPUT_WAITFORSCAN ]]; then
   ARGS+=( --wait_for_scan )
@@ -38,7 +38,7 @@ fi
 timeout "${INPUT_TIMEOUT+60:-360}s" contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY" \
  --authorization "$INPUT_AUTHHEADER" --organization_id "$INPUT_ORGID" --host "$INPUT_APIURL" \
  --project_name "$INPUT_PROJECTNAME" --language "$INPUT_LANGUAGE" --scan_timeout "${INPUT_TIMEOUT:-300}" \
- "${ARGS[@]}"
+ "${args[@]}"
 
 if [[ $INPUT_SAVESCANRESULTS ]]; then
   /usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' results.json
