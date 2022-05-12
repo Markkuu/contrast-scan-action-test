@@ -11,7 +11,10 @@ echo "Timeout: $INPUT_TIMEOUT"
 
 contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY"  --authorization "$INPUT_AUTHHEADER" --organization_id "$INPUT_ORGID" --host "$INPUT_APIURL" --project_name "$INPUT_PROJECTNAME" --language "$INPUT_LANGUAGE" --scan_timeout "${INPUT_TIMEOUT:-300}" --wait_for_scan --save_scan_results
 
+npm root -g
+
 ./node_modules/node-jq/bin/jq '.runs[].results | length' results.json
+
 
 file_size() {
 	file=$1
