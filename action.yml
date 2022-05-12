@@ -9,6 +9,9 @@ inputs:
     required: true
   projectName:
     description: 'The name of the project you want to scan in Contrast (required).'
+    required: false
+  projectId:
+    description: 'The ID of the project you want to scan in Contrast (required).'
     required: true
   apiUrl:
     description: 'The name of the host and, optionally, the port expressed as <host>:<port>. Does not include the protocol section of the URL (https://). Defaults to app.contrastsecurity.com. (optional)'
