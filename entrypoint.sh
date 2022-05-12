@@ -13,8 +13,7 @@ contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY"  --authorization
 
 npm root -g
 
-./node_modules/node-jq/bin/jq '.runs[].results | length' results.json
-
+/usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' results.json
 
 file_size() {
 	file=$1
