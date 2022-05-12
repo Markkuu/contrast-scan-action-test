@@ -32,7 +32,7 @@ contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY" \
 
 if [ -n "$INPUT_SAVESCANRESULTS" ]
 then
-  RESULT_COUNT=/usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' "$INPUT_SARIF"
+  RESULT_COUNT=$(/usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' "$INPUT_SARIF")
   if [ "$RESULT_COUNT" -gt 25000 ]
   then
     echo "Sarif result limit hit. GitHub will reject this analysis"
