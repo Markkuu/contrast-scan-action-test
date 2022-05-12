@@ -30,7 +30,25 @@ contrast-cli --scan "$INPUT_ARTIFACT" --api_key "$INPUT_APIKEY" \
  --project_name "$INPUT_PROJECTNAME" --language "$INPUT_LANGUAGE" --scan_timeout "${INPUT_TIMEOUT:-300}" \
  ${INPUT_WAITFORSCAN:+"--wait_for_scan"} ${INPUT_SAVESCANRESULTS:+"--save_scan_results"} ${INPUT_SAVESCANRESULTS:+"--results_file_name"} ${INPUT_SAVESCANRESULTS:+"$INPUT_SARIF"}
 
-/usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' "$INPUT_SARIF"
-file_size results.json
+if [ -n "$INPUT_SAVESCANRESULTS" ]
+then
+  RESULT_COUNT=/usr/local/lib/node_modules/node-jq/bin/jq '.runs[].results | length' "$INPUT_SARIF"
+  if [ "$RESULT_COUNT" -gt 25000 ]
+  then
+    echo "Sarif result limit hit. GitHub will reject this analysis"
+  elif [ "$RESULT_COUNT" -gt 5000 ]
+  then
+    echo "Sarif truncation limit. Some results will be truncated"
+  fi
+  maximum_size=10485760
+  actual_size=$(wc -c <"$INPUT_SARIF")
+  if [ "$actual_size" -ge $maximum_size ]; then
+  	echo Results file size is over $maximum_size bytes
+  else
+  	echo Results file size is under $maximum_size bytes
+  fi
+fi
+
+
 
 
