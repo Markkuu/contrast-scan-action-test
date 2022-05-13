@@ -40,6 +40,10 @@ inputs:
     description: 'After the scan has completed successfully, store the scan results in SARIF format to disk.'
     required: false
     default: 'true'
+  validateSarifForGithub:
+    description: 'Enable this to perform checks on the SARIF based on the limitations specified by Github.'
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'
